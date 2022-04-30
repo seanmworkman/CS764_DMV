@@ -158,7 +158,8 @@ let mpeQuestions = {
         document: '',
 
         dpeOpen: false,
-        mpeOpen: false
+        mpeOpen: false,
+        ovdOpen: false
       };
     }  
   
@@ -209,6 +210,12 @@ let mpeQuestions = {
     toggleMPEOpen = () => {
       this.setState({
         mpeOpen: !this.state.mpeOpen
+      });
+    }
+
+    toggleOVDOpen = () => {
+      this.setState({
+        ovdOpen: !this.state.ovdOpen
       });
     }
 
@@ -264,6 +271,7 @@ let mpeQuestions = {
           this.setState({
             document: res.data.ovd
           });
+          this.toggleOVDOpen();
           console.log('result:', res.data)
           this.cancel(0);
         } catch (err) {
@@ -343,7 +351,7 @@ let mpeQuestions = {
                     <Input value={this.state.ovdDlSsn} onChange={(e) => this.setState({ ovdDlSsn: e.target.value })} />
                     <Label>DOB:</Label>
                     <Input value={this.state.ovdDob} onChange={(e) => this.setState({ ovdDob: e.target.value })} />
-                    <Label>Sold/Traded:</Label>
+                    <Label>Document Name:</Label>
                     <Input value={this.state.ovdDn} onChange={(e) => this.setState({ ovdDn: e.target.value })} />
                     <br />
                     <Button color='primary' onClick={() => this.submit(2)}>Submit</Button>{' '}<Button onClick={() => this.cancel(2)}>Cancel</Button>
@@ -426,6 +434,12 @@ let mpeQuestions = {
                             </tr>
                         </tbody>
                     </Table>
+                </ModalBody>
+            </Modal>
+            <Modal isOpen={this.state.ovdOpen} toggle={this.toggleOVDOpen} scrollable={true} size='lg'>
+                <ModalBody>
+                    <h2>Vital Document</h2><br />
+                    {this.state.document}
                 </ModalBody>
             </Modal>
           

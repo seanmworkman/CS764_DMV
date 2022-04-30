@@ -202,19 +202,19 @@ const runSearchAndAnalysis = async (root, { searchTerm, method }) => {
  * @param {*} param1 
  */
  const ovd = async (root, { ovdData }) => {
-  // let stringifiedData = data.stringify().replace(" ", "+");
-  // console.log(data)
-  // let form = 'ovd';
-  // let url = `http://127.0.0.1:5000/addToChain?form=${form}&data=${stringifiedData}`;
-  // try {
-  //   const response = await axios.get(url);
-  //   return response.data;
-  // } catch (err) {
-  //   console.log(err.response.body);
-  //   logError(err);
-  //   throw userFriendlyUnexpectedError();
-  // }
-  return ovdData['doc_name']
+  let identifier = ovdData['dl_ssn'] + ovdData['dob']
+  let stringifiedData = JSON.stringify(ovdData).replace(" ", "+");
+  console.log(stringifiedData)
+  let form = 'ovd';
+  let url = `http://127.0.0.1:5000/addToChain?identifier=${identifier}&data=${stringifiedData}`;
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (err) {
+    console.log(err.response.body);
+    logError(err);
+    throw userFriendlyUnexpectedError();
+  }
 }
 
 /**

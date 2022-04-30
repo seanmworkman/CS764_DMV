@@ -61,6 +61,9 @@ dataSetter = w3.eth.contract(
     abi=abi
 )
 
+# Setting a standard digitized document, in replace of populating many
+tx_hash = dataSetter.functions.setData('This is a vital document stored on the blockchain.').transact()
+
 # Looks up the user address or creates a new one if it does not exist
 def getUserAddress(identifier):
     # c = counter
@@ -83,6 +86,8 @@ def getUserAddress(identifier):
 def addToChain(identifier, data):
     user_address = getUserAddress(identifier)
     
+    if 'doc_name' in data:
+        return dataSetter.functions.getData().call()
 
     tx_hash = dataSetter.functions.setData(data).transact({
         'from': user_address,
@@ -96,8 +101,6 @@ def addToChain(identifier, data):
         return ["SUCCESS", tx_receipt, data]
 
     return ["FAILURE", tx_receipt, data]
-
-
 
 
 
